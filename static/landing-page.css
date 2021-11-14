@@ -31,12 +31,18 @@ body {
 }
 
 .Text-des {
+  /* background-color: pink; */
 }
 
 #whit-board {
+  text-align: center;
   font-size: 56px;
+  color: white;
+  font-weight: regular;
 }
 
 #text-des {
+  text-align: center;
   font-size: 28px;
+  color: white;
 }
