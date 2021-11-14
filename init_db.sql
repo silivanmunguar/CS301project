@@ -46,3 +46,4 @@ create table CreatedBy(
         on update cascade
         on delete cascade
 );
+);
