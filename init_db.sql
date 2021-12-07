@@ -1,4 +1,4 @@
-use alikadk_db;
+use lect_db;
 
 drop table if exists Users;
 drop table if exists Events;
@@ -7,10 +7,11 @@ drop table if exists CreatedBy;
 
 create table Users(
     stuid int not null auto_increment,
-    username varchar(50) not null,
-    email  varchar(50) not null,
-    hash_pwd varchar(100) not null,
-    primary key(stuid)
+    name varchar(50) not null,
+    email  varchar(50) not null unique,
+    hashed_pwd varchar(100) not null,
+    primary key(stuid),
+    index(email)
 );
 
 create table Events(
@@ -45,5 +46,4 @@ create table CreatedBy(
     foreign key (stuid) references Users(stuid)
         on update cascade
         on delete cascade
-);
 );
