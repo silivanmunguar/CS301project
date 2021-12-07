@@ -51,7 +51,7 @@ def login():
         return render_template("logged-in.html", email=email, password=password)
     except Exception as err:
         flash(f"form submission error {err}")
-        return "error"
+        return "error" 
 
 @app.route("/sign-up", methods=["POST"])
 def signup():
