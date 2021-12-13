@@ -19,7 +19,9 @@ def home():
 
 @app.route("/events")
 def events():
-    return render_template ("event.html")
+    if 'email' in session:
+        return render_template('event.html', name = session['name'])
+    return render_template ("landingPage.html")
 
 @app.route("/log-in", methods=["POST"])
 def login():
