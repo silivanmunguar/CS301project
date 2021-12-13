@@ -11,6 +11,9 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
 
 @app.route("/")
 def home():
+    if 'email' in session:
+        name = session['name']
+        return render_template('event.html', name = name)
     return render_template("landingPage.html")
 
 
@@ -88,5 +91,5 @@ def signup():
         return "error"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=8004)
 
