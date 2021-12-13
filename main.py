@@ -10,10 +10,6 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                           for i in range(20)])
 
 @app.route("/")
-def index():
-    return "This is a test message"
-
-@app.route("/home")
 def home():
     return render_template("landingPage.html")
 
