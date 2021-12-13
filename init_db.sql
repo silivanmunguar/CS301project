@@ -23,19 +23,6 @@ create table Events(
     primary key(eid)
 );
 
-create table Comments(
-    eid int not null,
-    stuid int not null,
-    text varchar(50),
-    primary key(eid,stuid),
-    foreign key (eid) references Events(eid) 
-        on update cascade
-        on delete cascade,
-    foreign key (stuid) references Users(stuid)
-        on update cascade
-        on delete cascade
-);
-
 create table CreatedBy(
     eid int not null,
     stuid int not null,
