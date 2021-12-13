@@ -11,7 +11,7 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
 
 @app.route("/")
 def index():
-    return "hello world"
+    return "This is a test message"
 
 @app.route("/home")
 def home():
@@ -19,6 +19,11 @@ def home():
         name = session['name']
         return render_template('event.html', name = name)
     return render_template("landingPage.html")
+
+
+@app.route("/events")
+def events():
+    return render_template ("event.html")
 
 @app.route("/log-in", methods=["POST"])
 def login():

@@ -1,17 +1,159 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="eng">
 
-{% block title %} Events {% endblock %}
-{% block content %}
+<head>
+    <style>
+        body {
+            background-color: #2A363B;
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin: 18px;
+        }
+        
+        li {
+            float: right;
+        }
+        
+        li a {
+            display: block;
+            border-radius: 20px;
+            block-size: 1.5em;
+            color: black;
+            text-align: center;
+            padding: .5em 10px;
+            text-decoration: none;
+        }
+        
+        li a:hover {
+            background-color: #FF847C;
+            color: #2A363B;
+        }
+        
+        .container {
+            background-color: #e84a5f;
+            margin: 0;
+            padding: 20px;
+            height: 4em;
+        }
+        
+        .app-logo {
+            padding: .5px;
+            margin: .1px;
+        }
+        
+        .app-logo img {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            padding: 10px;
+            object-fit: cover;
+        }
+        
+        .dropdown-profile {
+            padding: 10px;
+            margin-right: 30px;
+            float: right;
+        }
+        
+        .dropdown-profile:hover .dropdown-content {
+            display: block;
+        }
+        
+        .profile-image img {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            padding: 5px;
+            border-radius: 2em;
+            box-shadow: 0 4px 1px #2A363B;
+            object-fit: cover;
+        }
+        
+        .profile-image img:hover {
+            background-color: #FF847C;
+        }
+        
+        .dropdown-content {
+            display: none;
+            border-radius: 25px;
+            position: fixed;
+            top: 70px;
+            right: 5px;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #99B898;
+        }
+        
+        .search-box {
+            float: left;
+            margin: 20px;
+            margin-left: 80px;
+        }
+        
+        .search-box input[type=search] {
+            width: 300px;
+            height: 30px;
+            border-radius: 50px;
+            border: none;
+        }
+    </style>
+</head>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div id="messages">
-            {% for msg in messages %}
-                <p style="color: red;">{{msg}}</p>
-            {% endfor %}
+<body>
+    <div class="container" id="container">
+
+        <!-- Begin Navigation bar -->
+
+        <!-- Begin website logo -->
+        <div class="navbar">
+            <div class="app-logo">
+                <a href="/events"><img src="/images/WC.png" alt="app logo here"> </a>
             </div>
-        {% endif %}
-    {% endwith %}
+            <!-- End website logo -->
+            <!--Begin Profile Menu 
+            Serve as a dropdown menu for settings, saved events log out and more -->
+            <div class="dropdown-profile">
+                <div class="profile-image">
+                    <a><img src="https://bit.ly/3F1dWC0" alt="profile-image"> </a>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
+                    <a href="#">My Events</a>
+                    <a href="#">Calender</a>
+                    <a href="#">Edit Profile</a>
+                    <a href="#" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                </div>
+            </div>
+            <!--End Profile Menu -->
 
-    <h1>Hello user {{ name }}</h1>
-{% endblock %}
+            <!-- Begin Search
+            to be completed and impleted as a live search alongside a smart table and pagination -->
+            <div class="search-box"><input type="search" placeholder=" Search for an event...">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#myevents"> Upcoming </a></li>
+                <li><a href="#live"> Happening Now </a></li>
+            </ul>
+        </div>
+        <!-- End Navigation bar -->
+    </div>
+</body>
+
+</html>
