@@ -15,6 +15,9 @@ def index():
 
 @app.route("/home")
 def home():
+    if 'email' in session:
+        name = session['name']
+        return render_template('event.html', name = name)
     return render_template("landingPage.html")
 
 @app.route("/log-in", methods=["POST"])
@@ -87,5 +90,5 @@ def signup():
         return "error"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=8004)
 
