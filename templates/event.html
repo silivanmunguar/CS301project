@@ -1,17 +1,105 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="eng">
 
-{% block title %} Events {% endblock %}
-{% block content %}
+<head>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+        
+        li {
+            float: right;
+        }
+        
+        li a {
+            display: block;
+            border-radius: 20px;
+            block-size: 1.5em;
+            color: black;
+            text-align: center;
+            padding: .5em 10px;
+            text-decoration: none;
+        }
+        
+        li a:hover {
+            background-color: #FF847C;
+        }
+        
+        body {
+            background-color: #2A363B;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            background-color: #e84a5f;
+            margin: 0;
+            padding: 20px;
+            height: 4em;
+        }
+        
+        .app-logo {
+            padding: .5px;
+            margin: .1px;
+        }
+        
+        .app-logo img {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            padding: 10px;
+            object-fit: cover;
+        }
+        
+        .profile-logo {
+            padding: .5px;
+            margin: .1px;
+            float: right;
+        }
+        
+        .profile-logo img {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 1px #2A363B;
+            object-fit: cover;
+        }
+        
+        .search-box {
+            float: left;
+            margin: 20px;
+            margin-left: 80px;
+        }
+        
+        .search-box input[type=search] {
+            width: 300px;
+            height: 30px;
+            border-radius: 50px;
+            border: none;
+        }
+    </style>
+</head>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div id="messages">
-            {% for msg in messages %}
-                <p style="color: red;">{{msg}}</p>
-            {% endfor %}
+<body>
+    <div class="container" id="container">
+        <div class="navbar">
+            <div class="app-logo">
+                <a href="/events"><img src="https://bit.ly/3F1dWC0" alt="app logo"> </a>
             </div>
-        {% endif %}
-    {% endwith %}
+            <div class="profile-logo">
+                <a href="#profile"><img src="https://bit.ly/3F1dWC0" alt="profile-logo"> </a>
+            </div>
+            <div class="search-box"><input type="search" placeholder=" Search for an event...">
+            </div>
+            <ul>
+                <li><a href="#mycalender"> Calender </a></li>
+                <li><a href="#myevents"> My Events </a></li>
+            </ul>
+        </div>
+    </div>
+</body>
 
-    <h1>Hello user {{ name }}</h1>
-{% endblock %}
+
+</html>
