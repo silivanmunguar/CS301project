@@ -97,7 +97,7 @@ def login():
             session['name'] = name
             session['email'] = email
             session['stuid'] = row['stuid']
-            session['logged_in'] = True
+            session['logged_in'] = True 
             return render_template('event.html', name = name)
         else:
             flash('Email or password is incorrect. Try again or sign up.')
@@ -106,6 +106,47 @@ def login():
     except Exception as err:
         flash(f"form submission error {err}")
         return "error"  
+
+@app.route("/createEvent", methods=["GET", "POST"])
+def createEvents():
+
+    if session['stuid']:
+
+        if request.method == "GET":
+            #return 'hello mfers'
+            return render_template("eventForm.html")
+        else:
+            try:
+                eventName= request.form["eventName"]
+                location= request.form["location"]
+                time= request.form['eventTime']
+                description =request.form['description']
+                dbi.conf(db='alikadk_db')
+                con= dbi.connect()
+                crs= dbi.dict_cursor(con)
+                q="select * from Events;"
+                query=f"set @lid := select last_insert_id() from Events; insert into Events values (select lid+1, {eventName}, {descrip}, {time}, {location}); insert into CreatedBy values (select lid+1, {session['stuid']});"
+                crs.execute(query)
+                con.commit()
+                return render_template("landingpage.html")
+            except Exception as err:
+                flash(f"form submission error {err}")
+                return render_template("landingPage.html")
+                #return render_template('eventForm.html')
+
+@app.route("/logout")
+def logout():
+    try:
+        session.pop('stuid', None)
+        session.pop('email', None)
+        session.pop('logged_in', None)
+        session.pop('name', None)
+        flash("you have logged out")
+    except Exception as err:
+        flash(f"error {error}")
+    
+    return render_template("landingPage.html")
+
 
 @app.route("/sign-up", methods=["POST"])
 def signup():
