@@ -9,20 +9,41 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                                          '0123456789'))
                           for i in range(20)])
 
+
 @app.route("/")
 def index():
     return "This is a test message"
 
 @app.route("/home")
 def home():
-    if 'email' in session:
-        name = session['name']
-        return render_template('event.html', name = name)
+    if 'logged_in' in session:
+        is_logged_in = session['logged_in']
+        if is_logged_in:
+            return redirect(url_for('events'))
+        return render_template("landingPage.html")
     return render_template("landingPage.html")
 
 @app.route("/events")
 def events():
-    return render_template ("event.html")
+    if 'logged_in' in session:
+        is_logged_in = session['logged_in']
+        if is_logged_in:
+            return render_template('event.html')
+        return redirect(url_for('home'))
+    return redirect(url_for('home'))
+
+@app.route("/my-event")
+def myEvent():
+    if 'email' in session:
+        dbi.conf(db='lect_db')
+        conn = dbi.connect()
+        curs = dbi.cursor(conn)
+        curs.execute("SELECT * FROM Events;")
+        allEvents = curs.fetchall()
+        print(allEvents)
+        return render_template('myEvent.html', allEvents=allEvents)
+    flash("You are not logged in")
+    return redirect(url_for('home'))
 
 @app.route("/log-in", methods=["POST"])
 def login():
@@ -45,7 +66,7 @@ def login():
         print(f"hashed db is {hashed_db}. Hashed user is {hashed_user}.")
         print(hashed_user == hashed_db.encode())
         if hashed_user == hashed_db.encode():
-            flash('Successfully logged in.')
+            # flash('Successfully logged in.')
             name = row['name']
             session['name'] = name
             session['email'] = email
@@ -58,6 +79,17 @@ def login():
     except Exception as err:
         flash(f"form submission error {err}")
         return "error"  
+
+
+@app.route('/logout')
+def logout():
+    session.pop('name',None)
+    session.pop('email',None)
+    session.pop('stuid',None)
+    session['logged_in'] = False
+    flash('Successfully logged out!')
+    return redirect(url_for('home'))
+
 
 @app.route("/sign-up", methods=["POST"])
 def signup():

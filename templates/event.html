@@ -24,10 +24,10 @@
                 </div>
                 <div class="dropdown-content">
                     <a href="#" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
-                    <a href="#">My Events</a>
+                    <a href="{{ url_for('myEvent') }}">My Events</a>
                     <a href="#">Calender</a>
                     <a href="#">Edit Profile</a>
-                    <a href="#" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                    <a href="{{ url_for('logout') }}" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
                 </div>
             </div>
             <!--End Profile Menu -->

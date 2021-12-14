@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+        {%block title%}
+        {%endblock%}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/reset.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/header-1.css" />
+    {%block css%} {%endblock%}
+  </head>
+  <body>
+    <!-- Header Start -->
+    <header class="site-header">
+      <div class="wrapper site-header__wrapper">
+        <a href="{{ url_for('home') }}" class="brand">WhitBoard</a>
+        <nav class="nav">
+          <button class="nav__toggle" aria-expanded="false" type="button">
+            menu
+          </button>
+          <ul class="nav__wrapper">
+            <li class="nav__item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="nav__item"><a href="#">Create An Event</a></li>
+            <li class="nav__item"><a href="{{ url_for('myEvent') }}">My Event</a></li>
+            <li class="nav__item"><a href="{{ url_for('logout') }}">Log out</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- Header End -->
+
+    {% block body %}
+    {% endblock %}
+    <script src="/js/header-1.js"></script>
+  </body>
+</html>
