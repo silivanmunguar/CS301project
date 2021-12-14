@@ -20,7 +20,6 @@ def home():
         return render_template('event.html', name = name)
     return render_template("landingPage.html")
 
-
 @app.route("/events")
 def events():
     return render_template ("event.html")

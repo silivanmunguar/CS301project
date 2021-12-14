@@ -1,12 +1,18 @@
 {% extends "base.html" %} {% block css %}
+
 <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-<link rel="stylesheet" type="text/css" href="../static/landing-page.css"> {% endblock %} {% block title %} Welcome to WhitBoard {% endblock %} {% block content %} {% with messages = get_flashed_messages() %} {% if messages %}
-<div id="messages">
-    {% for msg in messages %}
-    <p style="color: red;">{{msg}}</p>
-    {% endfor %}
-</div>
-{% endif %} {% endwith %}
+<link rel="stylesheet" type="text/css" href="../static/landing-page.css"> {% endblock %} 
+{% block title %} Welcome to WhitBoard {% endblock %} 
+{% block content %} 
+{% with messages = get_flashed_messages() %} 
+    {% if messages %}
+    <div id="messages">
+        {% for msg in messages %}
+        <p style="color: red;">{{msg}}</p>
+        {% endfor %}
+    </div>
+    {% endif %} 
+{% endwith %}
 
 
 <h2>Welcome to WhitBoard</h2>
