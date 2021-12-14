@@ -11,16 +11,51 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
 
 @app.route("/")
 def index():
-    return "This is a test message"
+    return "Bonjour Emily"
 
 @app.route("/home")
 def home():
     return render_template("landingPage.html")
 
 
-@app.route("/events")
-def events():
-    return render_template ("event.html")
+@app.route("/createEvent", methods=["GET", "POST"])
+def createEvents():
+
+    session['stuid']=0
+    if request.method == "GET":
+        #return 'hello mfers'
+        return render_template("eventForm.html")
+    else:
+        try:
+            eventName= request.form["eventName"]
+            location= request.form["location"]
+            time= request.form['eventTime']
+            description =request.form['description']
+            dbi.conf(db='alikadk_db')
+            con= dbi.connect()
+            crs= dbi.dict_cursor(con)
+            q="select * from Events;"
+            query=f"set @lid := select last_insert_id() from Events; insert into Events values (select lid+1, {eventName}, {descrip}, {time}, {location}); insert into CreatedBy values (select lid+1, {session['stuid']});"
+            crs.execute(query)
+            con.commit()
+            return render_template("landingpage.html")
+        except Exception as err:
+            flash(f"form submission error {err}")
+            return render_template("landingPage.html")
+            #return render_template('eventForm.html')
+
+@app.route("/logout")
+def logout():
+    try:
+        session.pop('stuid', None)
+        session.pop('email', None)
+        session.pop('logged_in', None)
+        session.pop('name', None)
+        flash("you have logged out")
+    except Exception as err:
+        flash(f"error {error}")
+    
+    return render_template("landingPage.html")
 
 @app.route("/log-in", methods=["POST"])
 def login():
@@ -35,7 +70,7 @@ def login():
                      [email])
         row = curs.fetchone()
         if row is None:
-            flash('Email or password is incorrect. Try again or sign up.')
+            flash('Email or password is incorrectNULL. Try again or sign up.')
             return redirect(url_for('home'))
 
         hashed_db = row["hashed_pwd"]
@@ -92,5 +127,6 @@ def signup():
         return "error"
 
 if __name__ == "__main__":
+    #dbi.cache_cnf()   # defaults to ~/.my.cnf
     app.run(debug=True, port=5000)
 
