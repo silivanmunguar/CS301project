@@ -10,14 +10,21 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                           for i in range(20)])
 
 @app.route("/")
+<<<<<<< HEAD
 def index():
     return "Bonjour Emily"
 
 @app.route("/home")
+=======
+>>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
 def home():
+    if 'email' in session:
+        name = session['name']
+        return render_template('event.html', name = name)
     return render_template("landingPage.html")
 
 
+<<<<<<< HEAD
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
 
@@ -56,6 +63,13 @@ def logout():
         flash(f"error {error}")
     
     return render_template("landingPage.html")
+=======
+@app.route("/events")
+def events():
+    if 'email' in session:
+        return render_template('event.html', name = session['name'])
+    return render_template ("landingPage.html")
+>>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
 
 @app.route("/log-in", methods=["POST"])
 def login():
@@ -127,6 +141,10 @@ def signup():
         return "error"
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     #dbi.cache_cnf()   # defaults to ~/.my.cnf
     app.run(debug=True, port=5000)
+=======
+    app.run(debug=True, port=8004)
+>>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
 
