@@ -55,7 +55,6 @@ def login():
         else:
             flash('Email or password is incorrect. Try again or sign up.')
             return redirect(url_for('home'))
-        return render_template("logged-in.html", email=email, password=password)
     except Exception as err:
         flash(f"form submission error {err}")
         return "error"  
