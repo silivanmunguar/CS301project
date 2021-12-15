@@ -97,7 +97,7 @@ def login():
         return "error"  
 
 @app.route("/createEvent", methods=["GET", "POST"])
-def createEvents():
+def createEvents1():
 
     if session['stuid']:
 
@@ -124,7 +124,7 @@ def createEvents():
                 #return render_template('eventForm.html')
 
 @app.route("/logout")
-def logout():
+def logout1():
     try:
         session.pop('stuid', None)
         session.pop('email', None)

@@ -1,4 +1,5 @@
 
+use munguars_db;
 
 drop table if exists Users;
 drop table if exists Events;
