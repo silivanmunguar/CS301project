@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 import bcrypt, random
 import cs304dbi as dbi
 
+dbi.conf(db='munguars_db')
+
 app = Flask(__name__)
 
 app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' + 
@@ -21,6 +23,23 @@ def home():
     #     return render_template('event.html', name = name)
     return render_template("event.html")
 
+@app.route("/events")
+def events():
+    # if 'email' in session:
+    # name = session['name']
+    # dbi.conf(db='munguars_db')
+    conn = dbi.connect()
+    curs = dbi.cursor(conn)
+    curs.execute("SELECT * FROM Events order by time;")
+    allEvents = curs.fetchall()
+    print(allEvents)
+    return render_template('event.html', allEvents=allEvents)
+    # flash("You are not logged in")
+    # return redirect(url_for('home'))
+    # return render_template("event.html")
+
+
+
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
 
@@ -34,7 +53,7 @@ def createEvents():
             location= request.form["location"]
             time= request.form['eventTime']
             description =request.form['description']
-            dbi.conf(db='alikadk_db')
+            # dbi.conf(db='munguars_db')
             con= dbi.connect()
             crs= dbi.dict_cursor(con)
             q="select * from Events;"
@@ -73,9 +92,8 @@ def login():
                      [email])
         row = curs.fetchone()
         if row is None:
-            flash('Email or password is incorrectNULL. Try again or sign up.')
+            flash('Email or password is incorrect. Try again or sign up.')
             return redirect(url_for('home'))
-
         hashed_db = row["hashed_pwd"]
         hashed_user = bcrypt.hashpw(password.encode(), hashed_db.encode())
         print(f"hashed db is {hashed_db}. Hashed user is {hashed_user}.")
@@ -110,7 +128,7 @@ def createEvents1():
                 location= request.form["location"]
                 time= request.form['eventTime']
                 description =request.form['description']
-                dbi.conf(db='alikadk_db')
+                # dbi.conf(db='alikadk_db')
                 con= dbi.connect()
                 crs= dbi.dict_cursor(con)
                 q="select * from Events;"
@@ -130,10 +148,9 @@ def logout1():
         session.pop('email', None)
         session.pop('logged_in', None)
         session.pop('name', None)
-        flash("you have logged out")
+        flash("You have logged out!")
     except Exception as err:
         flash(f"error {error}")
-    
     return render_template("landingPage.html")
 
 
@@ -147,7 +164,7 @@ def signup():
 
         print(f"the password is {password}, The hashed password is {hashed}")
 
-        dbi.conf(db='lect_db')
+        # dbi.conf(db='lect_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
         try:
