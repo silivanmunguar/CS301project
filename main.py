@@ -38,6 +38,21 @@ def events():
     # return redirect(url_for('home'))
     # return render_template("event.html")
 
+# @app.route("/edit-event")
+# def edit_event():
+#     # if 'email' in session:
+#     # name = session['name']
+#     # dbi.conf(db='munguars_db')
+#     conn = dbi.connect()
+#     curs = dbi.cursor(conn)
+#     curs.execute("SELECT * FROM Events where title = #given_title ;")
+#     allEvents = curs.fetchall()
+#     print(allEvents)
+#     return render_template('event.html', allEvents=allEvents)
+#     # flash("You are not logged in")
+#     # return redirect(url_for('home'))
+#     # return render_template("event.html")
+
 
 
 @app.route("/createEvent", methods=["GET", "POST"])
