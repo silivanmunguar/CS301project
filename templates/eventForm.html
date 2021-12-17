@@ -1,33 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div id="messages">
+    {% for msg in messages %} 
+    <p style="color: red;">{{msg}}</p>
+    {% endfor %}
+</div>
+{% endif %} {% endwith %}
+<link rel="stylesheet" type="text/css" href="../static/eventForm.css">
+<div class= "nav_bar">
+    <nav><a href= {{ url_for("events") }} > My Events <a>|<a href= {{ url_for("logout") }}  > Log Out <a> </nav>
+</div>
 <div class=container>
-    <nav><a href= {{ url_for("home") }} > My Events <a>|<a href= {{ url_for("logout") }}  > Log Out <a> </nav>
-    <form id="eventForm" action="" method="POST">
+    <form id="eventForm" action="" method="POST" enctype="multipart/form-data">
         <table>
-        
-            <tr><td><label for="eventName">title</label></td>
-                <td><input id="eventName" name="eventName" required></td>
-            </tr>
-
-            <tr><td><label for="description">description</label></td>
-                <td><input id="description" name="description" required></td>
-            </tr>
-
-            <tr><td><label for="location">location</label></td>
-                <td><input id="location" name="location" required></td>
-                <td><label for="time">time</label></td>
-                <td><input type="datetime-local" id="eventTime" name="eventTime" required></td>
+            <tr>
+                <td><label for="eventName">title</label></td>
+                <td><input id="eventName" name="eventName" required/></td>
+                <td><label for="description">description</label></td>
+                <td><input id="description" name="description" required/></td>
             </tr>
 
             <tr>
-                <td>
-                    <label for= "eventImage"> Import Photo</label></td>
-                    <td><input type="file" id="eventImage" name="eventImage">
-                </td>
+                <td><label for="location">location</label></td>
+                <td><input id="location" name="location" required/></td>
+                <td><label for="time">time</label></td>
+                <td><input type="datetime-local" id="eventTime" name="eventTime" required/></td>
             </tr>
-            <tr><td><input type='submit'></td></tr>
         </table>   
+        <label for= "eventImage"> Import Photo</label>
+        <input type="file" name="file"/>
+        <input id="submit_btn" type='submit' value="Submit Event"/>
     </form>
 </div>
 {% endblock %}

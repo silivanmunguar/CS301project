@@ -1,8 +1,16 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 import bcrypt, random
 import cs304dbi as dbi
+from werkzeug.utils import secure_filename
+import os
+
+
+UPLOAD_FOLDER = '~alikadk/cs301db/homework/hw5/ven/project/CS301project/uploads'
+ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' + 
                                          'abcdefghijklmnopqrstuvxyz' +
@@ -10,24 +18,22 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                           for i in range(20)])
 
 @app.route("/")
-<<<<<<< HEAD
 def index():
     return "Bonjour Emily"
 
 @app.route("/home")
-=======
->>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
 def home():
-    if 'email' in session:
-        name = session['name']
-        return render_template('event.html', name = name)
+    if 'logged_in' in session:
+        is_logged_in = session['logged_in']
+        if is_logged_in:
+            return redirect(url_for('events'))
+        return render_template("landingPage.html")
     return render_template("landingPage.html")
 
-
-<<<<<<< HEAD
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
-
+    def allowed_file(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     session['stuid']=0
     if request.method == "GET":
         #return 'hello mfers'
@@ -38,18 +44,23 @@ def createEvents():
             location= request.form["location"]
             time= request.form['eventTime']
             description =request.form['description']
+            if request.files['file'].filename != '' and allowed_file(request.files['file']):
+                print('hi')
+                filename = secure_filename(request.files['file'].filename)
+                request.files['file'].save(filename)
             dbi.conf(db='alikadk_db')
             con= dbi.connect()
-            crs= dbi.dict_cursor(con)
-            q="select * from Events;"
-            query=f"set @lid := select last_insert_id() from Events; insert into Events values (select lid+1, {eventName}, {descrip}, {time}, {location}); insert into CreatedBy values (select lid+1, {session['stuid']});"
-            crs.execute(query)
+            crs= dbi.cursor(con)
+            query2=f" insert into Events values (NULL, '{eventName}', '{description}', '{time}', '{location}', {session['stuid']});"
+            print(query2)
+            crs.execute(query2)
             con.commit()
-            return render_template("landingpage.html")
+            flash("Event added")
+            return render_template('eventForm.html')
         except Exception as err:
-            flash(f"form submission error {err}")
-            return render_template("landingPage.html")
-            #return render_template('eventForm.html')
+            flash(f"form submission error {err}.\n Please try again!")
+            return render_template('eventForm.html')
+
 
 @app.route("/logout")
 def logout():
@@ -63,13 +74,28 @@ def logout():
         flash(f"error {error}")
     
     return render_template("landingPage.html")
-=======
+
+@app.route("/my-event")
+def myEvent():
+    if True: #'email' in session:
+        dbi.conf(db='lect_db')
+        conn = dbi.connect()
+        curs = dbi.cursor(conn)
+        curs.execute("SELECT * FROM Events;")
+        allEvents = curs.fetchall()
+        print(allEvents)
+        return render_template('myEvent.html', allEvents=allEvents)
+    #flash("You are not logged in")
+    #return redirect(url_for('home'))
+
 @app.route("/events")
 def events():
+    session['email']='alikadk'
+    session['name']='Kalilou'
     if 'email' in session:
         return render_template('event.html', name = session['name'])
     return render_template ("landingPage.html")
->>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
+
 
 @app.route("/log-in", methods=["POST"])
 def login():
@@ -102,51 +128,9 @@ def login():
         else:
             flash('Email or password is incorrect. Try again or sign up.')
             return redirect(url_for('home'))
-        return render_template("logged-in.html", email=email, password=password)
     except Exception as err:
         flash(f"form submission error {err}")
         return "error"  
-
-@app.route("/createEvent", methods=["GET", "POST"])
-def createEvents():
-
-    if session['stuid']:
-
-        if request.method == "GET":
-            #return 'hello mfers'
-            return render_template("eventForm.html")
-        else:
-            try:
-                eventName= request.form["eventName"]
-                location= request.form["location"]
-                time= request.form['eventTime']
-                description =request.form['description']
-                dbi.conf(db='alikadk_db')
-                con= dbi.connect()
-                crs= dbi.dict_cursor(con)
-                q="select * from Events;"
-                query=f"set @lid := select last_insert_id() from Events; insert into Events values (select lid+1, {eventName}, {descrip}, {time}, {location}); insert into CreatedBy values (select lid+1, {session['stuid']});"
-                crs.execute(query)
-                con.commit()
-                return render_template("landingpage.html")
-            except Exception as err:
-                flash(f"form submission error {err}")
-                return render_template("landingPage.html")
-                #return render_template('eventForm.html')
-
-@app.route("/logout")
-def logout():
-    try:
-        session.pop('stuid', None)
-        session.pop('email', None)
-        session.pop('logged_in', None)
-        session.pop('name', None)
-        flash("you have logged out")
-    except Exception as err:
-        flash(f"error {error}")
-    
-    return render_template("landingPage.html")
-
 
 @app.route("/sign-up", methods=["POST"])
 def signup():
@@ -182,10 +166,7 @@ def signup():
         return "error"
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     #dbi.cache_cnf()   # defaults to ~/.my.cnf
-    app.run(debug=True, port=5000)
-=======
-    app.run(debug=True, port=8004)
->>>>>>> bc9a3bf6a27669bb4b6f1cb74c20aa0380200825
+    app.run(debug=True, port=3169)
+
 
