@@ -38,7 +38,10 @@ def myEvent():
         dbi.conf(db='lect_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
-        curs.execute("SELECT * FROM Events;")
+        curs.execute('''SELECT * 
+        FROM Events 
+        WHERE sid = %s''',
+                     [session['stuid']])
         allEvents = curs.fetchall()
         print(allEvents)
         return render_template('myEvent.html', allEvents=allEvents)
