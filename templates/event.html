@@ -2,48 +2,110 @@
 <html lang="eng">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/event.css">
+    <link rel="stylesheet" type="text/css" href="/static/event.css">
 </head>
 
-<body>
-    <div class="container" id="container">
-
+<header>
+    <div class="header">
         <!-- Begin Navigation bar -->
-
-        <!-- Begin website logo -->
         <div class="navbar">
-            <div class="app-logo">
-                <a href="/events"><img src="/images/WC.png" alt="app logo here"> </a>
-            </div>
-            <!-- End website logo -->
-            <!--Begin Profile Menu 
-            Serve as a dropdown menu for settings, saved events log out and more -->
-            <div class="dropdown-profile">
-                <div class="profile-image">
-                    <a><img src="https://bit.ly/3F1dWC0" alt="profile-image"> </a>
+            <!-- Begin website logo -->
+            <div class="row">
+                <div class="app-logo">
+                    <a href="/home"><img src="https://bit.ly/3DLBCct" alt="app logo"> </a>
                 </div>
-                <div class="dropdown-content">
-                    <a href="#" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
-                    <a href="{{ url_for('myEvent') }}">My Events</a>
-                    <a href="#">Calender</a>
-                    <a href="#">Edit Profile</a>
-                    <a href="{{ url_for('logout') }}" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                <!-- End website logo -->
+                <!--Begin Menu Profile -->
+                <div class="dropdown-profile">
+                    <div class="profile-image">
+                        <a><img src="https://bit.ly/3F1dWC0" alt="profile-image"> </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('createEvents') }}" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
+                        <a href="{{ url_for('myEvent') }}">My Events</a>
+                        <a href="#">Calender</a>
+                        <a href="#">Edit Profile</a>
+                        <a href="{{ url_for('logout') }}" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                    </div>
+                    <!--End Profile Menu -->
                 </div>
+                <!-- Begin Search to be impleted as live search with pagination -->
+                <div class="search-box"><input type="search" placeholder="   Search for an event ..." alt="Search area">
+                </div>
+                <!-- End search -->
+                <!-- OPTIONAL LINKs -->
+                <ul class="nav-links">
+                    <li><a href="#myevents">Feeling Lucky!</a></li>
+                </ul>
             </div>
-            <!--End Profile Menu -->
-
-            <!-- Begin Search
-            to be completed and impleted as a live search alongside a smart table and pagination -->
-            <div class="search-box"><input type="search" placeholder=" Search for an event...">
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="#myevents"> Upcoming </a></li>
-                <li><a href="#live"> Happening Now </a></li>
-            </ul>
         </div>
-        <!-- End Navigation bar -->
+        <!-- End Navigation Bar -->
+</header>
+
+<section class="happening-section">
+    <!-- Future: Happening now, if not hide section or show recent events -->
+    <div class="col-12">
+        <div class="happening-section-text">
+            <h2 class="happening-section-title"><b><i>Happening Now</i></b></h2>
+        </div>
     </div>
+    <div class="happening-now-cards">
+        <div class="col-12">
+            <!-- Iterate over happening now events in the future to show three cars and an expansion if more -->
+            <div class="col-4">
+                <div class="ncolumn">
+                    <div class="ncard"><img src="https://bit.ly/3IYOsYv">
+                        <h3 class="event-title">Title</h3>
+                        <p class="event-description">Descpriton</p>
+                        <p class="event-time">Started at time given
+                        </p>
+                        <p class="event-location">Head to Location</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ncolumn">
+                    <div class="ncard"><img src="https://bit.ly/3IYOsYv">
+                        <h3 class="event-title">Title</h3>
+                        <p class="event-description">Descpriton</p>
+                        <p class="event-time">Started at time given
+                        </p>
+                        <p class="event-location">Head to Location</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ncolumn">
+                    <div class="ncard"><img src="https://bit.ly/3IYOsYv">
+                        <h3 class="event-title">Title</h3>
+                        <p class="event-description">Descpriton</p>
+                        <p class="event-time">Started at time given
+                        </p>
+                        <p class="event-location">Head to Location</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<body>
+    <div class="col-12">
+        <div class="all-events-text">
+            <h2 class="all-events"><b><i>All Events</i></b></h2>
+        </div>
+    </div>
+    {% for event in events %}
+    <div class="column">
+        <div class="card"><img src="https://bit.ly/3IYOsYv">
+            <h3 class="event-title">{{event[1]}}</h3>
+            <p class="event-description">{{event[2]}}</p>
+            <p class="event-time"><i><b>Time: </b>{{event[3]}}</i>
+            </p>
+            <p class="event-location"><b>Location: </b>{{event[4]}}</p>
+        </div>
+    </div>
+    {% endfor %}
 </body>
 
 </html>
