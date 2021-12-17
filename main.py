@@ -144,7 +144,7 @@ def signup():
 
         print(f"the password is {password}, The hashed password is {hashed}")
 
-        dbi.conf(db='alikadk_db')
+        dbi.conf(db='lect_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
         try:
