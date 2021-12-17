@@ -4,6 +4,8 @@ import cs304dbi as dbi
 from werkzeug.utils import secure_filename
 import os
 
+dbi.conf(db='alikadk_db')
+
 
 UPLOAD_FOLDER = '~alikadk/cs301db/homework/hw5/ven/project/CS301project/uploads'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
@@ -17,10 +19,6 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                                          '0123456789'))
                           for i in range(20)])
 
-@app.route("/")
-def index():
-    return "Index page"
-
 @app.route("/home")
 def home():
     if 'logged_in' in session:
@@ -29,6 +27,19 @@ def home():
             return redirect(url_for('events'))
         return render_template("landingPage.html")
     return render_template("landingPage.html")
+ 
+# Pull events from db and pass them onto html
+@app.route("/events")
+def events():
+    if 'email' in session:
+        conn = dbi.connect()
+        curs = dbi.cursor(conn)
+        curs.execute("SELECT * FROM Events;")
+        results = curs.fetchall()
+        print(results)
+    return render_template('myEvent.html', events=results)
+    flash("You are not logged in")
+    return redirect(url_for('home'))
 
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
@@ -74,7 +85,6 @@ def logout():
 @app.route("/my-event")
 def myEvent():
     if 'email' in session: #'email' in session:
-        dbi.conf(db='alikadk_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
         curs.execute("SELECT * FROM Events;")
@@ -84,11 +94,6 @@ def myEvent():
     flash("You are not logged in")
     return redirect(url_for('home'))
 
-@app.route("/events")
-def events():
-    if 'email' in session:
-        return render_template('event.html', name = session['name'])
-    return render_template ("landingPage.html")
 
 
 @app.route("/log-in", methods=["POST"])
@@ -159,7 +164,7 @@ def signup():
         print(err)
         return "error"
 
-if __name__ == "__main__":
+if __name__ == "__main__":dbi.conf(db='alikadk_db')
     #dbi.cache_cnf()   # defaults to ~/.my.cnf
     app.run(debug=True, port=3169)
 
