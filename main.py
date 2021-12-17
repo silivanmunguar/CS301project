@@ -4,7 +4,7 @@ import cs304dbi as dbi
 from werkzeug.utils import secure_filename
 import os
 
-dbi.conf(db='alikadk_db')
+dbi.conf(db='munguars_db')
 
 
 UPLOAD_FOLDER = '~alikadk/cs301db/homework/hw5/ven/project/CS301project/uploads'
@@ -27,6 +27,10 @@ def home():
             return redirect(url_for('events'))
         return render_template("landingPage.html")
     return render_template("landingPage.html")
+
+@app.route("/home")
+def home():
+   return render_template("landingPage.html")
  
 # Pull events from db and pass them onto html
 @app.route("/events")
