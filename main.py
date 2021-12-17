@@ -18,46 +18,16 @@ def index():
 
 @app.route("/home")
 def home():
-    # if 'email' in session:
-    #     name = session['name']
-    #     return render_template('event.html', name = name)
-    return render_template("event.html")
-
-@app.route("/events")
-def events():
-    # if 'email' in session:
-    # name = session['name']
-    # dbi.conf(db='munguars_db')
-    conn = dbi.connect()
-    curs = dbi.cursor(conn)
-    curs.execute("SELECT * FROM Events order by time;")
-    allEvents = curs.fetchall()
-    print(allEvents)
-    return render_template('event.html', allEvents=allEvents)
-    # flash("You are not logged in")
-    # return redirect(url_for('home'))
-    # return render_template("event.html")
-
-# @app.route("/edit-event")
-# def edit_event():
-#     # if 'email' in session:
-#     # name = session['name']
-#     # dbi.conf(db='munguars_db')
-#     conn = dbi.connect()
-#     curs = dbi.cursor(conn)
-#     curs.execute("SELECT * FROM Events where title = #given_title ;")
-#     allEvents = curs.fetchall()
-#     print(allEvents)
-#     return render_template('event.html', allEvents=allEvents)
-#     # flash("You are not logged in")
-#     # return redirect(url_for('home'))
-#     # return render_template("event.html")
+    if 'email' in session:
+        name = session['name']
+        return render_template("event.html", name = name)
+    return render_template("landingPage.html")
 
 
+    
 
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
-
     session['stuid']=0
     if request.method == "GET":
         #return 'hello mfers'
@@ -88,7 +58,7 @@ def logout():
         session.pop('email', None)
         session.pop('logged_in', None)
         session.pop('name', None)
-        flash("you have logged out")
+        flash("You have logged out")
     except Exception as err:
         flash(f"error {error}")
     return render_template("landingPage.html")

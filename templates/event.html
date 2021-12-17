@@ -4,110 +4,48 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static/event.css">
 </head>
+
 <header>
-    <div class="container" id="container">
-
+    <div class="header">
         <!-- Begin Navigation bar -->
-
-        <!-- Begin website logo -->
         <div class="navbar">
-            <div class="app-logo">
-                <a href="/events"><img src="https://bit.ly/3DLBCct" title="college logo" alt="app logo here"> </a>
-            </div>
-            <!-- End website logo -->
-            <!--Begin Profile Menu 
-            Serve as a dropdown menu for settings, saved events log out and more -->
-            <div class="dropdown-profile">
-                <div class="profile-image">
-                    <a><img src="https://bit.ly/3F1dWC0" alt="profile-image"> </a>
+            <!-- Begin website logo -->
+            <div class="row">
+                <div class="app-logo">
+                    <a href="/home"><img src="https://bit.ly/3DLBCct" alt="app logo"> </a>
                 </div>
-                <div class="dropdown-content">
-                    <a href="#" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
-                    <a href="#">My Events</a>
-                    <a href="#">Calender</a>
-                    <a href="#">Edit Profile</a>
-                    <a href="/logout" onclick="" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                <!-- End website logo -->
+                <!--Begin Menu Profile -->
+                <div class="dropdown-profile">
+                    <div class="profile-image">
+                        <a><img src="https://bit.ly/3F1dWC0" alt="profile-image"> </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="#" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">Create Event</a>
+                        <a href="#">My Events</a>
+                        <a href="#">Calender</a>
+                        <a href="#">Edit Profile</a>
+                        <a href="/logout" onclick="" style="border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;">Log Out</a>
+                    </div>
+                    <!--End Profile Menu -->
                 </div>
+                <!-- Begin Search to be impleted as live search with pagination -->
+                <div class="search-box"><input type="search" placeholder="   Search for an event ..." alt="Search area">
+                </div>
+                <!-- End search -->
+                <!-- OPTIONAL LINKs -->
+                <ul class="nav-links">
+                    <li><a href="#myevents">Feeling Lucky!</a></li>
+                </ul>
             </div>
-            <!--End Profile Menu -->
-
-            <!-- Begin Search
-            to be completed and impleted as a live search alongside a smart table and pagination -->
-            <div class="search-box"><input type="search" placeholder=" Search for an event...">
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="#myevents">Upcoming</a></li>
-                <li><a href="#live">Happening Now</a></li>
-            </ul>
         </div>
-        <!-- End Navigation bar -->
-    </div>
+        <!-- End Navigation Bar -->
 </header>
 
-<body>
-    <div class="card">
-        <img src="" alt="Picture of Event" style="width: 100;">
-        <div class="container">
-            <h4 class="event-title"><b>{allEvents{1}}</b></h4>
-            <p class="event-description">{allEvents{2}}</p>
-            <p class="event-time"><b><i>Time:</i></b>{allEvents{3}}</p>
-        </div>
+<section>
+    <div class="top-text">
+        <a class="event-titles"><b><i>Happening now</i></b></a>
     </div>
-
-
-
-
-
-
-
-    <!-- <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="https://cdn.shopify.com/s/files/1/1313/8515/files/The-Top-10-Styles-of-Dance-ballet_large.jpg?v=1486570399" class="card-img" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Event title</h5>
-                    <p class="card-text">This is a event description.</p>
-                    <p class="card-text">
-                        <small class="text-muted"><b>Time:</b> Nov 10 at 7pm</small>
-                        <br>
-                        <small class="text-muted"><b>Location:</b> Gac</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="https://img.static-kl.com/images/media/E95E1F32-A7A4-4FC0-AC0A41A2BC528AE3?aspect_ratio=1:1&min_width=912" class="card-img" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">{{allEvents[1]}}</h5>
-                    <p class="card-text">{{allEvents[2]}}</p>
-                    <p class="card-text">
-                        <small class="text-muted"><b>Time:</b> {{allEvents[3]}}</small>
-                        <br>
-                        <small class="text-muted"><b>Location:</b> {{allEvents[4]}}</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
- -->
-
-</body>
+</section>
 
 </html>
