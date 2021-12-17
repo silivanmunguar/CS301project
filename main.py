@@ -2,6 +2,9 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 import bcrypt, random
 import cs304dbi as dbi
+from datetime import datetime
+
+
 
 dbi.conf(db='munguars_db')
 
@@ -18,11 +21,35 @@ def index():
 
 @app.route("/home")
 def home():
-    if 'email' in session:
-        name = session['name']
-        return render_template("event.html", name = name)
+    if 'logged_in' in session:
+        is_logged_in = session['logged_in']
+        if is_logged_in:
+            return redirect(url_for('events'))
+        return render_template("landingPage.html")
     return render_template("landingPage.html")
 
+@app.route("/events")
+def events():
+    conn = dbi.connect()
+    curs = dbi.cursor(conn)
+    curs.execute("SELECT * FROM Events;")
+    results = curs.fetchall()
+    print(results)
+    return render_template('event.html', events=results)
+
+
+@app.route("/my-event")
+def myEvent():
+    if 'email' in session:
+        dbi.conf(db='lect_db')
+        conn = dbi.connect()
+        curs = dbi.cursor(conn)
+        curs.execute("SELECT * FROM Events;")
+        allEvents = curs.fetchall()
+        print(allEvents)
+        return render_template('myEvent.html', allEvents=allEvents)
+    flash("You are not logged in")
+    return redirect(url_for('home'))
 
     
 
