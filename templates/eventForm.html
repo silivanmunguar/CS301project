@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class=container>
+    <nav><a href= {{ url_for("home") }} > My Events <a>|<a href= {{ url_for("logout") }}  > Log Out <a> </nav>
+    <form id="eventForm" action="" method="POST">
+        <table>
+        
+            <tr><td><label for="eventName">title</label></td>
+                <td><input id="eventName" name="eventName" required></td>
+            </tr>
+
+            <tr><td><label for="description">description</label></td>
+                <td><input id="description" name="description" required></td>
+            </tr>
+
+            <tr><td><label for="location">location</label></td>
+                <td><input id="location" name="location" required></td>
+                <td><label for="time">time</label></td>
+                <td><input type="datetime-local" id="eventTime" name="eventTime" required></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for= "eventImage"> Import Photo</label></td>
+                    <td><input type="file" id="eventImage" name="eventImage">
+                </td>
+            </tr>
+            <tr><td><input type='submit'></td></tr>
+        </table>   
+    </form>
+</div>
+{% endblock %}
