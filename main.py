@@ -19,7 +19,7 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
 
 @app.route("/")
 def index():
-    return "Bonjour Emily"
+    return "Index page"
 
 @app.route("/home")
 def home():
@@ -32,11 +32,7 @@ def home():
 
 @app.route("/createEvent", methods=["GET", "POST"])
 def createEvents():
-    def allowed_file(filename):
-        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    session['stuid']=0
     if request.method == "GET":
-        #return 'hello mfers'
         return render_template("eventForm.html")
     else:
         try:
@@ -44,7 +40,7 @@ def createEvents():
             location= request.form["location"]
             time= request.form['eventTime']
             description =request.form['description']
-            if request.files['file'].filename != '' and allowed_file(request.files['file']):
+            if request.files['file'].filename != '':
                 print('hi')
                 filename = secure_filename(request.files['file'].filename)
                 request.files['file'].save(filename)
@@ -77,21 +73,19 @@ def logout():
 
 @app.route("/my-event")
 def myEvent():
-    if True: #'email' in session:
-        dbi.conf(db='lect_db')
+    if 'email' in session: #'email' in session:
+        dbi.conf(db='alikadk_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
         curs.execute("SELECT * FROM Events;")
         allEvents = curs.fetchall()
         print(allEvents)
         return render_template('myEvent.html', allEvents=allEvents)
-    #flash("You are not logged in")
-    #return redirect(url_for('home'))
+    flash("You are not logged in")
+    return redirect(url_for('home'))
 
 @app.route("/events")
 def events():
-    session['email']='alikadk'
-    session['name']='Kalilou'
     if 'email' in session:
         return render_template('event.html', name = session['name'])
     return render_template ("landingPage.html")
@@ -142,7 +136,7 @@ def signup():
 
         print(f"the password is {password}, The hashed password is {hashed}")
 
-        dbi.conf(db='lect_db')
+        dbi.conf(db='alikadk_db')
         conn = dbi.connect()
         curs = dbi.cursor(conn)
         try:

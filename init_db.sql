@@ -6,10 +6,11 @@ drop table if exists Events;
 
 create table Users(
     stuid int not null auto_increment,
-    username varchar(50) not null,
-    email  varchar(50) not null,
-    hash_pwd varchar(100) not null,
-    primary key(stuid)
+    name varchar(50) not null,
+    email  varchar(50) not null unique,
+    hashed_pwd varchar(100) not null,
+    primary key(stuid),
+    index(email)
 );
 
 create table Events(
