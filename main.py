@@ -166,6 +166,6 @@ def signup():
 
 if __name__ == "__main__":
     #dbi.cache_cnf()   # defaults to ~/.my.cnf
-    app.run(debug=True, port=3169)
+    app.run(debug=True, port=5000)
 
 
