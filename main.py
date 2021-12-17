@@ -164,7 +164,7 @@ def signup():
         print(err)
         return "error"
 
-if __name__ == "__main__":dbi.conf(db='alikadk_db')
+if __name__ == "__main__":
     #dbi.cache_cnf()   # defaults to ~/.my.cnf
     app.run(debug=True, port=3169)
 
