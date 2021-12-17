@@ -19,7 +19,7 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
                                          '0123456789'))
                           for i in range(20)])
 
-@app.route("/home")
+@app.route("/")
 def home():
     if 'logged_in' in session:
         is_logged_in = session['logged_in']
