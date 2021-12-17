@@ -4,7 +4,7 @@ import cs304dbi as dbi
 from werkzeug.utils import secure_filename
 import os
 
-dbi.conf(db='munguars_db')
+dbi.conf(db='alikadk_db')
 
 
 UPLOAD_FOLDER = '~alikadk/cs301db/homework/hw5/ven/project/CS301project/uploads'
@@ -59,10 +59,9 @@ def createEvents():
                 print('hi')
                 filename = secure_filename(request.files['file'].filename)
                 request.files['file'].save(filename)
-            dbi.conf(db='alikadk_db')
             con= dbi.connect()
             crs= dbi.cursor(con)
-            query2=f" insert into Events values (NULL, '{eventName}', '{description}', '{time}', '{location}', {session['stuid']});"
+            query2=f" insert into Events values (NULL, '{eventName}', '{description}', '{time}', '{location}', {session['stuid']});" 
             print(query2)
             crs.execute(query2)
             con.commit()
