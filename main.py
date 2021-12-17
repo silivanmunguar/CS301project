@@ -37,7 +37,7 @@ def events():
         curs.execute("SELECT * FROM Events;")
         results = curs.fetchall()
         print(results)
-    return render_template('myEvent.html', events=results)
+        return render_template('myEvent.html', events=results)
     flash("You are not logged in")
     return redirect(url_for('home'))
 
